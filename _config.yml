@@ -14,7 +14,7 @@ kramdown:
 
 paginate: 7
 paginate_path: "page/:num"
-permalink: /:year/:month/:day/:title
+permalink: blog/:year/:month/:day/:title.html
 encoding: utf-8
 future: true
 lsi: false
