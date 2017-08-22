@@ -1,1 +1,35 @@
-theme: jekyll-theme-leap-day
+markdown: kramdown
+kramdown:
+  input: GFM
+  extensions:
+    - autolink
+    - footnotes
+    - smart
+  enable_coderay: false
+  syntax_highlighter: coderay
+highlighter: rouge
+
+
+paginate: 7
+paginate_path: "page/:num"
+encoding: "utf-8"
+future: true
+lsi: false
+safe: false
+plugins: [jekyll-paginate]
+
+blog:
+    name: 重阳
+    description: 没有想不到，只有做不到
+    title: 重阳的博客
+    url: tuchongyang.github.io
+    duoshuo: tcy
+    tongji: tcy
+    qiniu: # 七牛云地址
+author:
+    name: 涂重阳
+    email: 779311998@qq.com
+    weibo: http://weibo.com/tuchongyang
+    github: https://github.com/tuchongyang
+    logo: /res/img/psb.jpg
+          
