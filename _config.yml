@@ -5,14 +5,17 @@ kramdown:
     - autolink
     - footnotes
     - smart
-  enable_coderay: false
+  enable_coderay: true
   syntax_highlighter: coderay
-highlighter: rouge
+  highlighter: rouge
+  syntax_highlighter_opts:
+    line_numbers:  nil
 
 
 paginate: 7
 paginate_path: "page/:num"
-encoding: "utf-8"
+permalink: /:year/:month/:day/:title
+encoding: utf-8
 future: true
 lsi: false
 safe: false
