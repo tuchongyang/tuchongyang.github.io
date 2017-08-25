@@ -12,7 +12,7 @@ kramdown:
     line_numbers:  nil
 
 
-paginate: 7
+paginate: 20
 paginate_path: "page/:num"
 permalink: blog/:year/:month/:day/:title.html
 encoding: utf-8

@@ -1,0 +1,14 @@
+<div class="header">
+	<div class="wraper">
+		<div class="logo">
+			重阳
+		</div>
+		<div class="menu" id="menu">
+		    <ul>
+		    {% for nav in site.data.nav %}
+		      <li><a href="{{ nav.href }}"{% if nav.newblank == true %}target="_blank"{% endif %}><i class="{{ nav.icon }}"></i>&nbsp;{{ nav.title }}</a></li>
+		    {% endfor%}
+		    </ul>
+		</div>  
+	</div>
+</div>
