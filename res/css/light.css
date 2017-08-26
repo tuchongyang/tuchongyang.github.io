@@ -19,6 +19,7 @@
 body {
 	background-color:#fff;
 	overflow:auto;
+	font-size:14px;
 }
 h1,.post-main h2,h3 {
 	font-weight:lighter;
@@ -77,19 +78,20 @@ td {
 	font-family:"Microsoft YaHei",SimHei,"Ubuntu Mono",Ubuntu,"Ubuntu Light",Arial,"STHeiti",Corbel,sans-serif;
 }
 a {
-	color:#444444;
+	color:#666;
 }
 a:hover {
-	color:#00D809;
+	color:#e34c31;
 }
 a:link {
 	text-decoration:none;
 }
 .sidebar {
 	text-align:center;
-	background:#eee;
+	border-left:1px solid #eee;
 	width:240px;
 	float:right;
+	padding-left: 40px;
 }
 .profilepic {
 	margin-top:12%;
@@ -98,7 +100,8 @@ a:link {
 .profilepic img {
 	height:100px;
 	width:100px;
-	border:4px solid rgba(0,100,200,0.5);
+	border:4px solid #eee;
+	vertical-align: top;
 	border-radius:50%;
 	-moz-border-radius:50%;
 	-webkit-border-radius:50%;
@@ -108,26 +111,9 @@ a:link {
 	-o-transition:-moz-transform 0.8s ease-out,border-radius 0.5s ease-out;
 }
 .profilepic img:hover {
-	transform:rotateZ(360deg);
-	-webkit-transform:rotateZ(360deg);
-	-moz-transform:rotateZ(360deg);
-	-o-transform:rotateZ(360deg);
-	border-radius:10%;
-	-moz-border-radius:10%;
-	-webkit-border-radius:10%;
-	-o-border-radius:10%;
+	box-shadow:0 0 10px rgba(20,20,20,.1);
 }
-.title {
-	font-size:40px;
-	margin-top:-3%;
-}
-.title a {
-	color:#444;
-	font-weight:500;
-}
-.title a:hover {
-	color:yellow;
-}
+
 .sidebar .title{
 	font-size:18px;
 }
@@ -188,49 +174,26 @@ a:link {
 	vertical-align:middle;
 	display:inline-block;
 	opacity:0.8;
-	height:28px;
-	width:28px;
+	height: 1.6em;
+	width: 1.6em;
+	line-height: 1.6em;
 	margin:0 7px 0 7px;
+	font-size:20px;
+	background:#eee;
+	text-align: center;
 }
-#sub-nav a.weibo {
-	color:#fff;
-	background:#55cff8;
-	line-height:25px;
-	padding-top:1px;
-}
-#sub-nav a.weibo:hover {
-	color:#55cff8;
-	background:#ffeb00;
-	line-height:25px;
-	padding-top:1px;
-}
-#sub-nav a.github {
-	margin-bottom:4px;
-	color:#dfdfdf;
-}
-#sub-nav a.github:hover {
-	margin-bottom:4px;
-	color:#ffeb00;
-	opacity:0.9;
-}
-#sub-nav a.rss {
-	color:#fff;
-	background: #b9993c;
-	padding-left:2px;
-	padding-top:3px;
-}
-#sub-nav a.rss:hover {
-	color:#4999E2;
-	background:#ef7522;
-	padding-left:2px;
-	padding-top:3px;
-}
+
 #license {
 	margin-top:5%;
 }
 /************************************/
 .header{
+	width: 100%;
+	background: #fff;
+	z-index: 99;
 	border-bottom:1px solid #eee;
+	transition: all .5s;
+	-webkit-transition: all .5s;
 }
 .header .wraper{
 	width:1200px;
@@ -240,7 +203,9 @@ a:link {
 }
 .header .logo{
 	float:left;
-	line-height: 50px;
+}
+.header .logo img{
+	height: 50px;
 }
 .header .menu{
 	float: right;
@@ -252,8 +217,69 @@ a:link {
 .header .menu li a{
 	display: block;
 	line-height: 50px;
-	padding: 0 0 0 20px;
+	padding: 0 0 0 30px;
 }
+.header .menu li.current a{
+	color: #e34c31;
+}
+.site-state{
+	overflow: hidden;
+	padding: 20px 0;
+}
+.site-state .item{
+	float:left;
+	width:33.3333333%;
+	text-align: center;
+	padding: 0 15px;
+}
+.site-state .item b{
+
+}
+.site-state .item span{
+	display: block;
+	color: #999;
+}
+.site-state .item:hover b{
+	color:#e34c31;
+}
+.r-grid{
+	margin-bottom: 20px;
+	text-align: left;
+}
+.r-grid .r-hd{
+	line-height: 36px;
+	border-bottom:1px solid #eee;
+	margin-bottom: 10px;
+}
+.r-grid .r-hd .tit{
+	margin:0;
+	font-size:16px;
+}
+.cat-list{
+
+}
+.cat-list li{
+	list-style: none;
+	font-size: 14px;
+	line-height: 20px;
+}
+.taglist{
+
+}
+.taglist a{
+	margin:0 10px 10px 0;
+	display: inline-block;
+}
+.fix-header{
+	padding-top: 95px;
+}
+.fix-header .header{
+	position: fixed;
+	top: 0!important;
+	left: 0;
+	box-shadow: 0 0 8px rgba(99,99,99,.1);
+}
+/****************************************/
 .main {
 	width: 1200px;
 	margin:0 auto;
@@ -265,7 +291,9 @@ a:link {
 	float:left;
 }
 .posts {
+	padding-bottom: 20px;
 	margin-bottom: 20px;
+	border-bottom: 1px solid #ddd;
 }
 
 
@@ -302,7 +330,6 @@ a:link {
 }
 .post-title:hover {
 	color: #d89127;
-	margin-left:5px;
 	letter-spacing:2px;
 	word-break:break-all;
 }
@@ -385,6 +412,10 @@ a.pagination-item:hover {
 .share {
 	margin:25px 0 25px 1px;
 }
+.post-detail-header .post-title a{
+	color:#000;
+	font-weight: bold;
+}
 footer {
 	font-size:16px;
 	line-height:1.5;
@@ -434,7 +465,6 @@ footer {
 }
 .post-main a:hover {
 	color:#00bb2f;
-	margin-left:33px;
 }
 .post-main hr{
 	margin:0;
@@ -486,8 +516,7 @@ code {
 	font-family:Monaco,Consolas,Menlo,"Andale Mono","Courier New","Ubuntu Mono",Arial,"Microsoft YaHei","Hiragino Sans GB",sans-serif;
 	font-size:17px;
 	background:rgba(235,245,245,0.75);
-	color:#3BDD7E;
-	margin:0 2px;
+	color:#666;
 	padding:0 4px;
 	border-radius:4px;
 	letter-spacing:1px;
@@ -497,7 +526,7 @@ code {
 pre code {
 	font-family:Monaco,Consolas,Menlo,"Andale Mono","Courier New","Ubuntu Mono",Arial,"Microsoft YaHei","Hiragino Sans GB",sans-serif;
 	font-size:16px;
-	background:#666;
+	background:#eee;
 	border-radius:6px;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;

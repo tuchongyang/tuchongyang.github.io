@@ -1,5 +1,5 @@
 ---
-layout: life
+layout: blog
 title: 资源备忘手册
 duoshuo: true
 date: 2016-10-13

@@ -8,11 +8,10 @@
 	letter-spacing:1px;
 }
 .link {
-	margin-left:13.5em;
+	margin-left:10em;
 	margin-top:-24px;
 }
 .link a {
-	text-shadow:0 0 1px;
 	letter-spacing:2px;
 	transition:padding-left 0.25s;
 	-webkit-transition:padding-left 0.25s;
@@ -21,18 +20,17 @@
 }
 .link a:hover {
 	color:#00D809;
-	padding-left:15px;
+	padding-left:5px;
 }
 .timing {
 	position:relative;
 	margin-left:70px;
-	font-size:18px;
-	height:6em;
+	height: 2.4em;
 }
 .timing:before {
 	content:"";
 	width:5px;
-	left:8em;
+	left:6.6em;
 	top:10px;
 	bottom:-35px;
 	background:#e6e6e6;
@@ -43,7 +41,7 @@
 	width:15px;
 	height:15px;
 	top:5px;
-	left:8em;
+	left:6.6em;
 	background:#1c87bf;
 	margin-left:-5px;
 	border-radius:100%;
@@ -92,7 +90,7 @@
 
 .category {
 	color:#1BAF69;
-	text-shadow:0 0 1px;
+	font-size: 18px;
 	font-weight:600;
 	text-transform:Capitalize;
 	margin-top:35px;
@@ -101,17 +99,12 @@
 	list-style:none;
 }
 .category-box-sub {
-	font-size:20px;
-	margin-left:-38px;
 }
 .category-sub {
 	color:#1abc9c;
 	letter-spacing:1px;
-	font-size:18px;
-	margin-left:-39px;
 }
 .category-box-sub a {
-	text-shadow:0 0 1px;
 	letter-spacing:2px;
 	text-transform:Capitalize;
 	transition:padding-left 0.25s;
@@ -124,7 +117,6 @@
 	padding-left:10px;
 }
 .category-sub-title {
-	text-shadow:0 0 1px;
 	letter-spacing:2px;
 	word-break:break-all;
 	transition:padding-left 0.25s;

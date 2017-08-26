@@ -1,3 +1,7 @@
+- href: /
+  icon: fa fa-home
+  title: 首页
+
 - href: /page/timing.html
   icon: fa fa-clock-o
   title: 时间轴
@@ -6,9 +10,9 @@
   icon: fa fa-tags
   title: 文章分类
 
-- href: /life/index.html
-  icon: fa fa-eyedropper
-  title: 生活轨迹
+# - href: /life/index.html
+#   icon: fa fa-eyedropper
+#   title: 生活轨迹
 
 - href: /page/resourse.html
   icon:  fa fa-book
