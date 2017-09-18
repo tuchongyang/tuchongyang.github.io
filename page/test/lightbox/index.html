@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<title></title>
+	<style type="text/css">
+		.imgbox .item{width:200px;float:left;}
+		.imgbox .item img{width:100%;}
+		.lightimg-container{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:999;background:#fff;padding:15px;border-radius:10px;box-shadow:1px 1px 6px rgba(0,0,0,.1);opacity:0;visibility:hidden;}
+		.lightimg-container.active,.light-container-cover.active{opacity:1;visibility:visible;}
+		.lightimg-container .inner{display:inline-block;width:300px;height:300px;}
+		.lightimg-container .inner img{width:100%;}
+		.light-container-cover{position:fixed;width:100%;height:100%;top:0;left:0;z-index:998;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;}
+		.lightimg-prev,.lightimg-next{width:30px;height:70px;background:#eee;display:block;position:absolute;top:50%;margin-top:-35px;left:-50px;}
+		.lightimg-next{left:auto;right:-50px;}
+		.lightimg-close{position:absolute;width:40px;height:40px;background:#eee;top: -50px;right: -50px;}
+	</style>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+	<div class="imgbox">
+		<div class="item"><img src="images/1.jpg"></div>
+		<div class="item"><img src="images/2.jpg"></div>
+		<div class="item"><img src="images/3.jpg"></div>
+		<div class="item"><img src="images/4.jpg"></div>
+		<div class="item"><img src="images/5.jpg"></div>
+		<div class="item"><img src="images/6.jpg"></div>
+		<div class="item"><img src="images/7.jpg"></div>
+		<div class="item"><img src="images/8.jpg"></div>
+		<div class="item"><img src="images/9.jpg"></div>
+		<div class="item"><img src="images/10.jpg"></div>
+	</div>
+	<div class="lightimg-container" id="lightimg">
+		<div class="inner"><img src=""></div>
+		<div class="det">
+			<div class="pages"><span id="lightimgCurrentPage"></span>/<span id="lightimgTotalPage"></span></div>
+		</div>
+		<a href="javascript:;" class="lightimg-prev"></a>
+		<a href="javascript:;" class="lightimg-next"></a>
+		<a href="javascript:;" class="lightimg-close"></a>
+	</div>
+	<div class="light-container-cover" id="lightimgCover"></div>
+	<script type="text/javascript">
+		;(function($){
+			$.fn.lightbox = function(){
+				var imgNodes = [];
+				
+				var sw = $(window).width()*.9,sh = $(window).height()*.9;
+				var currentIndex = 0;
+				
+				function init(imgObj){
+					$('#lightimg').addClass('active');
+					$('#lightimgCover').addClass('active');
+					$('#lightimg .inner img').fadeOut(300);
+					$('#lightimg .inner').animate({width:imgObj.realWidth,height:imgObj.realHeight},300,function(){
+						$('#lightimg .inner img').attr({src:imgObj.imgNode.src}).fadeIn();
+					})
+					
+					$('#lightimgTotalPage').html(imgNodes.length);
+					$('#lightimgCurrentPage').html(parseInt(currentIndex+1));
+				}
+				function close(){
+					$('#lightimgCover,#lightimg').removeClass('active');
+					$('#lightimg .inner img').attr({src:''})
+				}
+				
+				return $(this).each(function(){
+					$(this).find('img').each(function(item,value){
+						var imgw = value.naturalWidth,imgh = value.naturalHeight;
+						if(imgw > sw){
+							imgw = sw;
+							imgh = value.naturalHeight * sw / value.naturalWidth;
+						}
+						if(imgh > sh){
+							imgh = sh;
+							imgw = value.naturalWidth * sh / value.naturalHeight;
+						}
+						imgNodes.push({
+							imgNode: value,
+							realWidth: imgw,
+							realHeight: imgh
+						})
+					})
+					console.log(imgNodes)
+					$(this).on('click','img',function(){
+						
+						for(var i in imgNodes){
+							if(this == imgNodes[i].imgNode){
+								currentIndex = i;
+								init(imgNodes[i]);
+							}
+						}
+					});
+					$('#lightimg').on('click','.lightimg-next',function(){
+						if(currentIndex >= imgNodes.length-1){return;}
+						init(imgNodes[++currentIndex]);
+					}).on('click','.lightimg-prev',function(){
+						if(currentIndex <= 0){return;}
+						init(imgNodes[--currentIndex]);
+					}).on('click','.lightimg-close',function(){
+						close();
+					})
+					
+					
+				})
+				
+			}
+		})(jQuery)
+		
+	
+		$(function(){
+			$('.imgbox').lightbox();
+		})
+		
+	</script>
+</body>
+</html>
