@@ -17,7 +17,8 @@
             .viewport button#back{display: none;}
 
             .face_info{position: absolute;background: rgba(0,0,0,.7);color: #fff;padding: 10px 15px;z-index: 30;top: 0;width: 300px;left: 50%;margin-left: -150px;border-radius:0 0 10px 10px;transition:all .2s;-webkit-transition:all .2s;transform: translateY(-100);-webkit-transform: translateY(-100);opacity: 0;}
-            .face_info ul{margin-top: 0;padding: 0;}
+            .face_info table{margin-top: 0;padding: 0;}
+            .face_info table td{vertical-align: top;}
             .face_info li{list-style: none;}
             .face_info h4{text-align: center;font-weight: normal;}
             .face_info.active{transform: translateY(0);-webkit-transform: translateY(0);opacity: 1;}
@@ -36,8 +37,8 @@
         </div>
         <div class="face_info" id="face_info">
             <h4>智能人脸识别</h4>
-            <ul>
-            </ul>
+            <table>
+            </table>
         </div>
     </body>
     <script type="text/javascript">
@@ -125,7 +126,7 @@ function photograph(){
         api_key: 'INiuC8eio9Lsez-rTAkN5Ymr4HieFbTb',
         api_secret: '7YiPBwK83KiJoxB2ux8t5zDFvcljE_wq',
         image_base64: image,
-        return_attributes: 'gender,age,beauty,skinstatus'
+        return_attributes: 'gender,age,beauty,skinstatus,emotion,ethnicity'
     }
     $.ajax({
         url:"https://api-cn.faceplusplus.com/facepp/v3/detect",
@@ -159,12 +160,25 @@ function drawFrame(rectangle){
 
 }
 function initFaceInfo(attributes,i){
-    var str = '<li>人脸'+(i+1)+':</li>'
-    str += '<li>性别：'+attributes.gender.value+'</li>';
-    str += '<li>年龄：'+attributes.age.value+'</li>';
-    str += '<li>皮肤：acne：'+attributes.skinstatus.acne+',dark_circle：'+attributes.skinstatus.acne+',health：'+attributes.skinstatus.acne+',stain：'+attributes.skinstatus.acne+'</li>';
-    str += '<li>美丽值：女'+attributes.beauty.female_score+'分,男'+attributes.beauty.male_score+'分</li>';
-    $("#face_info ul").append(str);
+    var sex = attributes.gender.value == 'Male'?'男':'女';
+    var emotion = "",emotionValue = 0;
+    for(var i in attributes.emotion){
+        if(emotionValue < attributes.emotion[i]){
+            emotion = i;
+            emotionValue = attributes.emotion[i];
+        }
+    }
+    emotion = emotion=='anger'?'愤怒':emotion=='disgust'?'厌恶':emotion=='anger'?'恐惧':emotion=='happiness'?'高兴':emotion=='neutral'?'平静':emotion=='sadness'?'伤心':emotion=='surprise'?'惊讶':'无表情';
+
+
+    var str = '<tr><td colspan="2">人脸'+(i+1)+':</td></tr>'
+    str += '<tr><td>性别：</td><td>'+sex+'</td></tr>';
+    str += '<tr><td>年龄：</td><td>'+attributes.age.value+'</td></tr>';
+    str += '<tr><td>人种：</td><td>'+(attributes.ethnicity == 'Asian'?'亚洲人':attributes.ethnicity == 'White'?'白人':attributes.ethnicity == 'Black'?'黑人':'亚洲人')+'</td></tr>';
+    str += '<tr><td>表情：</td><td>'+emotion+'</td></tr>';
+    str += '<tr><td>皮肤：</td><td>青春痘：'+attributes.skinstatus.acne+'<br />黑眼圈：'+attributes.skinstatus.acne+'<br />健康值：'+attributes.skinstatus.acne+'<br />色斑：'+attributes.skinstatus.acne+'</li>';
+    str += '<tr><td>美丽值：</td><td>女'+attributes.beauty.female_score+'分<br />男'+attributes.beauty.male_score+'分</td></tr>';
+    $("#face_info table").append(str);
     $("#face_info").addClass('active');
 }
 
