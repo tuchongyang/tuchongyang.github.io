@@ -5,69 +5,51 @@
     <meta charset="UTF-8">
     <title>精美CSS3聊天窗口DEMO演示</title>
     <link rel="stylesheet" href="assets/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/random_name.css">
 </head>
 
 <body>
-    <div class="header">
-        <div class="clients">聊天人数:1</div>
-        <div class="state">连接状态:1</div>
+    <div class="chart-popup">
+        <div class="head">
+            <div class="clients">聊天人数:0</div>
+            <div class="state">连接状态:</div>
+        </div>
+        <div id="convo" data-from="Sonu Joshi">
+            <ul class="chat-thread">
+                
+            </ul>
+        </div>
+        <div class="foot">
+            <div class="submit" id="submit">发送</div>
+            <div class="uhead"><span class="img"><img src="http://www.yunye123.com:8000/static/other/dosing/2017year/dsimg/heros/张让.png"></span><span class="name">张让</span></div>
+            <div class="edit-area" ><textarea id="message"></textarea></div>
+        </div>
     </div>
-    <div id="convo" data-from="Sonu Joshi">
-        <ul class="chat-thread wraper">
-            <li>Are we meeting today?</li>
-        </ul>
-    </div>
-    <div class="footer">
-        <div class="submit" id="submit">发送</div>
-        <div class="uhead"></div>
-        <div class="edit-area" id="message" contenteditable=""></div>
-    </div>
-<script src='assets/jquery.js'></script>
-<script type="text/javascript"> 
-    var ws = new WebSocket("ws://192.168.1.29:3000?t=test");  
-ws.onopen = function() { 
-    console.log("连接状态", ws);  
-    var state = ws.readyState==0?'未连接':ws.readyState==1?'已连接':ws.readyState==2?'正在关闭':ws.readyState==3?'已关闭':ws.readyState;
-    $(".header state").html("连接状态: " + state);  
-     
-};  
-ws.onmessage = function(evt) { 
-    console.log(evt.data) 
-    var data = JSON.parse(evt.data);
-    if(data.clients){
-        $('.header .clients').html('聊天人数:'+data.clients);
-    }else if(data.chart){
-        $('.chat-thread').append('<li>'+data.chart.content+'</li>')
-    } 
-};  
-ws.onclose = function(evt) {  
-    console.log("WebSocketClosed!");  
-    console.log(evt);  
-};  
-ws.onerror = function(evt) {  
-    console.log("WebSocketError!");  
-};  
 
-document.getElementById("submit").onclick = send;
-function send() {  
-    var msg = $("#message").html();  
-    var key = $("#token").val();  
-    var name = $("#name").val(); 
-    var strObj = {
-        chart:{
-            content: msg
-        }
-    }; 
-    var str = JSON.stringify(strObj);  
-    console.log("发送", str);  
-    ws.send(str);  
-};  
-  
-function exit() {  
-    var r = ws.close();  
-    console.log("退出", r);  
-}  
-</script>
+
+
+<div class="liuyan-model">
+    <div class="liuyan-model-container animated bounceIn">
+        <div class="liuyan-info">
+            <ul class="liuyan-li liuyan-name liuyan-case"><li>张嶷</li><li>张让</li><li>孙策</li></ul>
+            <ul class="liuyan-li liuyan-avatar liuyan-case"><img src="http://www.yunye123.com:8000/static/other/dosing/2017year/dsimg/heros/张让.png" data-name="张让"></ul>
+        </div>
+        <div class="liuyan-dice"><img src="http://www.yunye123.com:8000/static/other/dosing/2017year/dsimg/shaizi-3.png"></div>
+        <div class="liuyan-button">
+            <div class="cancel">取消</div>
+            <div class="confirm">确定</div>
+        </div>
+    </div>
+    <div class="liuyan-cover"></div>
+</div>
+
+
+<script src='assets/jquery.js'></script>
+<script type="text/javascript" src="assets/js/jquery.dragable.js"></script>
+<script type="text/javascript" src="assets/js/random_name.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
+
+
 </body>
 
 </html>
