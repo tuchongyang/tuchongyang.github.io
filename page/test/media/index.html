@@ -49,7 +49,38 @@
                     transform: rotate(-360deg)
                 }
             }
+            .upload-container{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 50;
+                display: none;
+            }
+            .btn-upload{
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translate(-50%,0);
+                -webkit-transform: translate(-50%,0);
 
+            }
+            .btn-upload input[type="file"]{
+                position: absolute;
+                z-index: 90;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                opacity: 0;
+            }
+            .viewport .btn-upload button{
+                position: static;
+                left: 0;
+                top:0;
+                margin:0;
+            }
         </style>
     </head>
 
@@ -59,6 +90,13 @@
             <button id="photograph" onclick="photograph()">拍照</button>
             <button id="back">返回</button>
             <canvas id="canvas"></canvas>
+            <div class="upload-container" id="upload">
+                <div class="tips" id="tips">该浏览器暂不支持拍照，请手动拍照或上传</div>
+                <div class="btn-upload">
+                    <input type="file" id="file">
+                    <button class="button">选择照片</button>
+                </div>
+            </div>
         </div>
         <div class="face_info" id="face_info">
             <h4>智能人脸识别</h4>
@@ -68,20 +106,23 @@
     </body>
     <script type="text/javascript">
     //初始化
-var video = document.getElementById("video");
-var canvas = document.querySelector('#canvas');//获取前台的canvas对象，用于作图
-var ctx = canvas.getContext('2d');//设置canvas绘制2d图，
-canvas.width = video.offsetWidth;
-canvas.height = video.offsetHeight;
-console.log($(video))
+    var video = document.getElementById("video");
+    var canvas = document.querySelector('#canvas');//获取前台的canvas对象，用于作图
+    var ctx = canvas.getContext('2d');//设置canvas绘制2d图，
+    canvas.width = video.offsetWidth;
+    canvas.height = video.offsetHeight;
+
+
+
+
         var promisifiedOldGUM = function(constraints) {
 
             // 第一个拿到getUserMedia，如果存在
-            var getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia);
+            var getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||  navigator.msGetUserMedia || navigator.oGetUserMedia);
 
             // 有些浏览器只是不实现它-返回一个不被拒绝的承诺与一个错误保持一致的接口
             if (!getUserMedia) {
-                return Promise.reject(new Error('getUserMedia is not implemented in this browser-getUserMedia是不是在这个浏览器实现'));
+                return Promise.reject(new Error('getUserMedia is not implemented in this browser-getUserMedia该浏览器不支持拍照功能'));
             }
 
             // 否则，调用包在一个旧navigator.getusermedia承诺
@@ -122,8 +163,10 @@ console.log($(video))
                     video.play();
                 };
             }).catch(function(err) {console.log(err)
-                $('.viewport').prepend('<div>'+err.name + ": " + err.message+'</div>')
+                //$('.viewport').prepend('<div>'+err.name + ": " + err.message+'</div>')
                 console.log(err.name + ": " + err.message);
+                $("#upload").show();
+                $("#photograph,#back").hide()
             });
 
 // var postData = {
@@ -139,6 +182,57 @@ console.log($(video))
 //         console.log(data);
 //     }
 // })
+document.getElementById("file").onchange = function(event){
+    var file = this.files[0];
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        $("#face_info table").empty();
+
+        var img = new Image();
+        img.onload = function(){
+
+            ctx.drawImage(img,0,0,img.width,img.height);
+            $("#tips").hide();
+        }
+        img.src = e.target.result; // 显示图片的地方
+
+        loading.show();
+
+        var image = e.target.result.split('base64').pop().replace(',','');
+        var postData = {
+            api_key: 'INiuC8eio9Lsez-rTAkN5Ymr4HieFbTb',
+            api_secret: '7YiPBwK83KiJoxB2ux8t5zDFvcljE_wq',
+            image_base64: image,
+            return_attributes: 'gender,age,beauty,skinstatus,emotion,ethnicity'
+        }
+        $.ajax({
+            url:"https://api-cn.faceplusplus.com/facepp/v3/detect",
+            method:"post",
+            data: postData,
+            success:function(data){
+                console.log(data);
+                data.faces.forEach(function(item,i){
+                    drawFrame(item.face_rectangle);
+                    initFaceInfo(item.attributes,i)
+                });
+                loading.hide();
+                if(data.faces.length <= 0){
+                    loading.show({text:'没有识别到人脸',loadimgshow:false,duration:2000});
+                }
+                
+            },
+            error:function(data){
+                loading.show({text:'识别失败，请稍后重试！',loadimgshow:false,duration:2000})
+            }
+        });
+        
+    };
+    
+    reader.readAsDataURL(file);
+    
+}
 
 function photograph(){
     
@@ -193,7 +287,7 @@ function drawFrame(rectangle){
     ctx.strokeRect(rectangle.left,rectangle.top,rectangle.width,rectangle.height);
 
 }
-function initFaceInfo(attributes,i){
+function initFaceInfo(attributes,index){
     var sex = attributes.gender.value == 'Male'?'男':'女';
     var emotion = "",emotionValue = 0;
     for(var i in attributes.emotion){
@@ -205,7 +299,7 @@ function initFaceInfo(attributes,i){
     emotion = emotion=='anger'?'愤怒':emotion=='disgust'?'厌恶':emotion=='anger'?'恐惧':emotion=='happiness'?'高兴':emotion=='neutral'?'平静':emotion=='sadness'?'伤心':emotion=='surprise'?'惊讶':'无表情';
 
 
-    var str = '<tr><td colspan="2">人脸'+(i+1)+':</td></tr>'
+    var str = '<tr><td colspan="2">人脸'+(index+1)+':</td></tr>'
     str += '<tr><td>性别：</td><td>'+sex+'</td></tr>';
     str += '<tr><td>年龄：</td><td>'+attributes.age.value+'</td></tr>';
     str += '<tr><td>人种：</td><td>'+(attributes.ethnicity == 'Asian'?'亚洲人':attributes.ethnicity == 'White'?'白人':attributes.ethnicity == 'Black'?'黑人':'亚洲人')+'</td></tr>';
