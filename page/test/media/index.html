@@ -164,6 +164,7 @@ function photograph(){
                 drawFrame(item.face_rectangle);
                 initFaceInfo(item.attributes,i)
             });
+            loading.hide();
             if(data.faces.length <= 0){
                 loading.show({text:'没有识别到人脸',loadimgshow:false,duration:2000});
             }
