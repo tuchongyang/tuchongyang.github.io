@@ -10,7 +10,7 @@ function init(){
     var initLi = '<li>\
         <div class="avatar"><span class="img"><img src="assets/images/Aladdin_lamp.gif"></span></div>\
         <!--<div class="name">阿拉丁</div>-->\
-        <div class="det">你好，我是阿拉丁神灯的灯神!</div>\
+        <div class="det">你好，我是阿拉丁智能客服!</div>\
     </li>';
     $('.chat-thread').append(initLi);
 }
