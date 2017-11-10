@@ -5,13 +5,13 @@ category : javascript
 date : 2017-09-04
 ---
 
-
+<!-- more -->
 RegExp 对象
 =====
 
 RegExp 对象表示正则表达式，它是对字符串执行模式匹配的强大工具。
 
-<!-- more -->
+
 
 **直接量语法**
 -----

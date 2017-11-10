@@ -6,10 +6,11 @@ date : 2017-08-24
 ---
 
 
+<!-- more -->
 
 昨天用iframe模拟原生应用的webview功能，嵌套一个网址或本地HTML，今天通过测试，在ipad会出现页面无法滚动的问题。iframe的宽高都为屏幕的宽和高，设置属性scrolling=‘auto’，以及样式overflow: auto都没用，而且iframe元素不支持touch事件，在iframe嵌套的网页内部用js实现滚动也不现实。
 
-<!-- more -->
+
 
 怎么让ipad safari 中的iframe的内容在固定大小中可滚动？ 
 
